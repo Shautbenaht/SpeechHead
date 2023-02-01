@@ -11,4 +11,4 @@ this telegram bot can convert text into voice messages and reply to the user.
 
 3. install all requirements from file "requirements.txt"
 
-4. Create a folder <data/> in the main directory
+4. Create a folder "data/" in the main directory
