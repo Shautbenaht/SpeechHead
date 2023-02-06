@@ -10,3 +10,5 @@ this telegram bot can convert text into voice messages and reply to the user.
 2. Create file token.txt in Main directory and post your TOKEN there
 
 3. install all requirements from file "requirements.txt"
+
+4. Create a folder "data/" in the main directory
