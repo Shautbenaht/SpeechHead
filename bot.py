@@ -1,4 +1,3 @@
-import logging
 from telegram.ext import ApplicationBuilder,CommandHandler, MessageHandler, filters
 from voice import textToFile
 
@@ -10,22 +9,14 @@ f_token = open("token.txt", 'r')
 TOKEN = f_token.read()
 f_token.close()
 
-
-# Basic telegram bot logging
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
-)
-
 # Comands
 async def startHandler(update, context):
-    await update.message.reply_text("For start, text me pls!")
+    await update.message.reply_text("For Start, text me pls!")
 
 
 async def helpHandler(update, context):
-    await update.message.reply_text(
-        """by Shautbenaht™ 
-        All command:
+    await update.message.reply_text("""
+            All commands:
             /start
             /help
 """)
@@ -33,17 +24,14 @@ async def helpHandler(update, context):
           
 # reply text from massages to voice.
 async def replyTextToVoice(update, context):
-    fileName = textToFile(update.message.text)   
+    fileName = textToFile(update.message.text, update.message.message_id)   
     await update.message.reply_voice(voice=open(fileName, "rb"))
     
-    #uncomment if you need to delete file after sending
-    # os.remove(fileName)
-
 def main() -> None:
     """Start the bot."""
     # Create the Application and pass it your bot's token.
     application = ApplicationBuilder().token(TOKEN).build()
-
+    
     # on different commands - answer in Telegram
     application.add_handler(CommandHandler("start", startHandler))
     application.add_handler(CommandHandler("help", helpHandler))
@@ -51,9 +39,12 @@ def main() -> None:
     # Reply your text to speech
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, replyTextToVoice))
 
+
+    
     # Run the bot until the user presses Ctrl-C
     application.run_polling()
 
 
 if __name__ == "__main__":
     main()
+    
